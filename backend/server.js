@@ -7,12 +7,12 @@ const app = express();
 
 // ---------------- CORS CONFIG ----------------
 const allowedOrigins = [
-  "https://solar-internship-website.vercel.app"
+  "https://solar-internship-website.vercel.app",
+  "https://solar-internship-website-ab2ys42p4-disha-marnes-projects.vercel.app"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow Postman / server-to-server
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
@@ -20,11 +20,15 @@ app.use(cors({
     }
 
     console.log("❌ Blocked by CORS:", origin);
-    return callback(new Error("Not allowed by CORS"));
+    return callback(null, false);
   },
-  methods: ["GET", "POST"],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type"],
   credentials: true
 }));
+
+// IMPORTANT: handle preflight requests
+app.options("*", cors());
 
 app.use(express.json());
 
