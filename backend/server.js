@@ -80,17 +80,17 @@ app.post("/api/calculator", async (req, res) => {
     const annualSaving = Math.round(billAmount * 12);
 
     await sheet.addRows([{
-  UnitsUsed: unitsUsed,
-  BillAmount: billAmount,
-  RoofSize: roofSize,
-  RoofType: roofType,
-  SystemSize: `${systemSize_kW.toFixed(2)} kW`,
-  Investment: `₹${systemAmount.toLocaleString("en-IN")}`,
-  ROI: `${roiYears} years`,
-  Panels: panelsRequired,
-  Saving: `₹${annualSaving.toLocaleString("en-IN")}`,
-  SubmittedAt: new Date(),
-}]);
+      UnitsUsed: unitsUsed,
+      BillAmount: billAmount,
+      RoofSize: roofSize,
+      RoofType: roofType,
+      SystemSize: `${systemSize_kW.toFixed(2)} kW`,
+      Investment: `₹${systemAmount.toLocaleString("en-IN")}`,
+      ROI: `${roiYears} years`,
+      Panels: panelsRequired,
+      Saving: `₹${annualSaving.toLocaleString("en-IN")}`,
+      SubmittedAt: new Date().toLocaleString("en-GB"),
+    }]);
 
     res.status(201).json({
       message: "Calculator data saved successfully",
@@ -105,13 +105,13 @@ app.post("/api/calculator", async (req, res) => {
 
   }
   catch (err) {
-  console.error("FULL ERROR:", err);
+    console.error("FULL ERROR:", err);
 
-  res.status(500).json({
-    error: err.message,
-    stack: err.stack
-  });
-}
+    res.status(500).json({
+      error: err.message,
+      stack: err.stack
+    });
+  }
 });
 
 // ---------------- CONTACT API ----------------
@@ -132,7 +132,7 @@ app.post("/api/contact", async (req, res) => {
       Email: email,
       ConsumerNumber: consumerNumber,
       Query: query,
-      SubmittedAt: new Date().toISOString(),
+      SubmittedAt: new Date().toLocaleString("en-GB"),
     });
 
     res.status(201).json({
