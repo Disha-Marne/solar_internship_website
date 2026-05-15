@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import businessMeetingImg from "../pics/contact.png";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const Contact = () => {
     if (formData.query.trim().length < 5) { alert("Query must be at least 5 characters."); return; }
 
     try {
-      const response = await fetch("http://localhost:5000/contact", {
+      const response = await fetch(`${API_URL}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData)

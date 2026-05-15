@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Calculator.css";
 import solarHouse from "../pics/homehouse.png";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Calculator = () => {
   const [unitsUsed, setUnitsUsed] = useState('');
@@ -81,7 +82,7 @@ const Calculator = () => {
     setResults(resultData);
 
     try {
-      const response = await axios.post("http://localhost:5000/calculator", {
+      const response = await fetch(`${API_URL}/api/calculator`, {
         unitsUsed: u,
         billAmount: b,
         roofSize: r,
