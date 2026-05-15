@@ -82,20 +82,32 @@ const Calculator = () => {
     setResults(resultData);
 
     try {
-      const response = await fetch(`${API_URL}/api/calculator`, {
-        unitsUsed: u,
-        billAmount: b,
-        roofSize: r,
-        roofType,
-        ...resultData
-      });
+  const response = await fetch(`${API_URL}/api/calculator`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      unitsUsed: u,
+      billAmount: b,
+      roofSize: r,
+      roofType,
+      ...resultData
+    }),
+  });
 
-      if (response.data.message) setSuccessMsg(response.data.message);
+  const data = await response.json();
 
-    } catch (err) {
-      console.error("Backend error:", err);
-      setError("Server not responding. Please try again.");
-    }
+  if (response.ok) {
+    console.log(data);
+  } else {
+    alert(data.message || "Calculation failed");
+  }
+
+} catch (error) {
+  console.error("Backend error:", error);
+  alert("Server not responding. Please try again.");
+}
 
     setLoading(false);
   };
