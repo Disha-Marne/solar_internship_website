@@ -92,7 +92,7 @@ const Calculator = () => {
       billAmount: b,
       roofSize: r,
       roofType,
-      ...resultData
+      
     }),
   });
 
