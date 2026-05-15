@@ -50,9 +50,9 @@ async function accessSheet(sheetId) {
   });
 
   await doc.loadInfo();
+
   return doc;
 }
-
 // ---------------- CALCULATOR API ----------------
 app.post("/api/calculator", async (req, res) => {
   try {
