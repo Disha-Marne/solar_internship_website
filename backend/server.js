@@ -79,7 +79,7 @@ app.post("/api/calculator", async (req, res) => {
     const roiYears = (systemAmount / (billAmount * 12)).toFixed(1);
     const annualSaving = Math.round(billAmount * 12);
 
-    await sheet.addRow({
+    await sheet.addRows([{
       UnitsUsed: unitsUsed,
       BillAmount: billAmount,
       RoofSize: roofSize,
@@ -90,7 +90,7 @@ app.post("/api/calculator", async (req, res) => {
       Panels: panelsRequired,
       Saving: `₹${annualSaving.toLocaleString("en-IN")}`,
       SubmittedAt: new Date().toLocaleString(),
-    });
+    }]);
 
     res.status(201).json({
       message: "Calculator data saved successfully",
