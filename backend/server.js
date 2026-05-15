@@ -1,52 +1,55 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const { GoogleSpreadsheet } = require('google-spreadsheet');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const { GoogleSpreadsheet } = require("google-spreadsheet");
 
 const app = express();
+
+// ---------------- CORS CONFIG ----------------
+const allowedOrigins = [
+  "https://solar-internship-website.vercel.app",
+  "https://national-solar-system.vercel.app"
+];
+
 app.use(cors({
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      "https://solar-internship-website.vercel.app",
-      "https://national-solar-system.vercel.app"
-    ];
-
-    // allow Postman / server-to-server requests
+    // allow server-to-server / Postman
     if (!origin) return callback(null, true);
 
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    return callback(new Error("Not allowed by CORS"));
+    console.log("❌ Blocked by CORS:", origin);
+    return callback(null, false);
   },
   methods: ["GET", "POST"],
   credentials: true
 }));
+
 app.use(express.json());
 
-// Helper function to access a Google Sheet
+// ---------------- GOOGLE SHEETS ----------------
 async function accessSheet(sheetId) {
   const doc = new GoogleSpreadsheet(sheetId);
 
   await doc.useServiceAccountAuth({
     client_email: process.env.CLIENT_EMAIL,
-    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+    private_key: process.env.PRIVATE_KEY.replace(/\\n/g, "\n"),
   });
 
   await doc.loadInfo();
   return doc;
 }
 
-// --- Calculator Submission Route ---
-app.post('/api/calculator', async (req, res) => {
+// ---------------- CALCULATOR API ----------------
+app.post("/api/calculator", async (req, res) => {
   try {
     const doc = await accessSheet(process.env.CALCULATOR_SHEET_ID);
     const sheet = doc.sheetsByIndex[0];
 
     const { unitsUsed, billAmount, roofSize, roofType } = req.body;
 
-    // --- 🔢 CALCULATIONS ---
     const COST_PER_KW = 60000;
     const PANEL_WATTAGE = 550;
     const PANEL_SIZE_SQFT = 28;
@@ -55,7 +58,6 @@ app.post('/api/calculator', async (req, res) => {
     const panelsRequired = Math.ceil((systemSize_kW * 1000) / PANEL_WATTAGE);
     const roofAreaRequired = panelsRequired * PANEL_SIZE_SQFT;
 
-    // Optional: roof validation
     if (roofAreaRequired > roofSize) {
       return res.status(400).json({
         message: `Not enough roof space! Need ~${Math.ceil(roofAreaRequired)} sq.ft`
@@ -66,7 +68,6 @@ app.post('/api/calculator', async (req, res) => {
     const roiYears = (systemAmount / (billAmount * 12)).toFixed(1);
     const annualSaving = Math.round(billAmount * 12);
 
-    // --- 📄 SAVE TO SHEET ---
     await sheet.addRow({
       UnitsUsed: unitsUsed,
       BillAmount: billAmount,
@@ -81,7 +82,7 @@ app.post('/api/calculator', async (req, res) => {
     });
 
     res.status(201).json({
-      message: 'Calculator data saved successfully',
+      message: "Calculator data saved successfully",
       results: {
         systemSize: systemSize_kW,
         investment: systemAmount,
@@ -92,13 +93,13 @@ app.post('/api/calculator', async (req, res) => {
     });
 
   } catch (err) {
-    console.error("ERROR:", err);
-    res.status(500).json({ error: err.message });
+    console.error("CALCULATOR ERROR:", err);
+    res.status(500).json({ error: "Server error in calculator API" });
   }
 });
 
-// --- Contact Form Submission Route ---
-app.post('/api/contact', async (req, res) => {
+// ---------------- CONTACT API ----------------
+app.post("/api/contact", async (req, res) => {
   try {
     const doc = await accessSheet(process.env.CONTACT_SHEET_ID);
     const sheet = doc.sheetsByIndex[0];
@@ -118,17 +119,23 @@ app.post('/api/contact', async (req, res) => {
       SubmittedAt: new Date().toLocaleString(),
     });
 
-    res.status(201).json({ message: "Contact form submitted successfully" });
+    res.status(201).json({
+      message: "Contact form submitted successfully"
+    });
 
   } catch (err) {
     console.error("CONTACT ERROR:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: "Server error in contact API" });
   }
 });
 
-// --- Test route ---
-app.get('/', (req, res) => res.send('Backend is running'));
+// ---------------- TEST ROUTE ----------------
+app.get("/", (req, res) => {
+  res.send("Backend is running");
+});
 
-// Start server
+// ---------------- START SERVER ----------------
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
