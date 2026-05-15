@@ -20,15 +20,14 @@ app.use(cors({
     }
 
     console.log("❌ Blocked by CORS:", origin);
-    return callback(null, false);
+    return callback(new Error("CORS not allowed"));
   },
   methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
-  credentials: true
+  allowedHeaders: ["Content-Type"]
 }));
 
-// FIX: safe wildcard handling
-app.options("/*", cors());
+// ❌ REMOVE THIS LINE
+// app.options("/*", cors());
 
 app.use(express.json());
 
