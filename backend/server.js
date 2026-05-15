@@ -5,7 +5,10 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const app = express();
 app.use(cors({
-  origin: "https://national-solar-system.vercel.app",
+  origin: [
+    "https://solar-internship-website.vercel.app",
+    "https://national-solar-system.vercel.app"
+  ],
   methods: ["GET", "POST"],
   credentials: true
 }));
