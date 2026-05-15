@@ -5,10 +5,21 @@ const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 const app = express();
 app.use(cors({
-  origin: [
-    "https://solar-internship-website.vercel.app",
-    "https://national-solar-system.vercel.app"
-  ],
+  origin: function (origin, callback) {
+    const allowedOrigins = [
+      "https://solar-internship-website.vercel.app",
+      "https://national-solar-system.vercel.app"
+    ];
+
+    // allow Postman / server-to-server requests
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    return callback(new Error("Not allowed by CORS"));
+  },
   methods: ["GET", "POST"],
   credentials: true
 }));
