@@ -89,7 +89,9 @@ app.post("/api/calculator", async (req, res) => {
       ROI: `${roiYears} years`,
       Panels: panelsRequired,
       Saving: `₹${annualSaving.toLocaleString("en-IN")}`,
-      SubmittedAt: new Date().toLocaleString("en-GB"),
+      SubmittedAt: new Date().toLocaleString("en-GB", {
+  timeZone: "Asia/Kolkata"
+}),
     }]);
 
     res.status(201).json({
@@ -115,6 +117,7 @@ app.post("/api/calculator", async (req, res) => {
 });
 
 // ---------------- CONTACT API ----------------
+// ---------------- CONTACT API ----------------
 app.post("/api/contact", async (req, res) => {
   try {
     const doc = await accessSheet(process.env.CONTACT_SHEET_ID);
@@ -123,25 +126,36 @@ app.post("/api/contact", async (req, res) => {
     const { name, email, phone, consumerNumber, query } = req.body;
 
     if (!name || !email || !phone || !consumerNumber || !query) {
-      return res.status(400).json({ message: "All fields are required" });
+      return res.status(400).json({
+        message: "All fields are required"
+      });
     }
 
-    await sheet.addRows({
+    await sheet.addRows([{
       Name: name,
       Phone: phone,
       Email: email,
       ConsumerNumber: consumerNumber,
       Query: query,
-      SubmittedAt: new Date().toLocaleString("en-GB"),
-    });
+
+      // INDIA TIME
+      SubmittedAt: new Date().toLocaleString("en-GB", {
+        timeZone: "Asia/Kolkata"
+      }),
+    }]);
 
     res.status(201).json({
       message: "Contact form submitted successfully"
     });
 
   } catch (err) {
-    console.error("CONTACT ERROR:", err);
-    res.status(500).json({ error: "Server error in contact API" });
+
+    console.error("FULL CONTACT ERROR:", err);
+
+    res.status(500).json({
+      error: err.message,
+      stack: err.stack
+    });
   }
 });
 
