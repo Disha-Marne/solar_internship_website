@@ -7,23 +7,32 @@ const app = express();
 
 // ---------------- CORS CONFIG ----------------
 const allowedOrigins = [
-  "https://solar-internship-website.vercel.app",
-  "https://solar-internship-website-ab2ys42p4-disha-marnes-projects.vercel.app/contact"
+  "https://solar-internship-website.vercel.app"
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
+
+    // allow requests without origin
     if (!origin) return callback(null, true);
 
+    // allow production
     if (allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    console.log("❌ Blocked by CORS:", origin);
-    return callback(new Error("CORS not allowed"));
+    // allow ALL vercel preview deployments
+    if (origin.includes("vercel.app")) {
+      return callback(null, true);
+    }
+
+    console.log("Blocked by CORS:", origin);
+    return callback(null, false);
   },
+
   methods: ["GET", "POST", "OPTIONS"],
-  allowedHeaders: ["Content-Type"]
+  allowedHeaders: ["Content-Type"],
+  credentials: true
 }));
 
 // ❌ REMOVE THIS LINE
