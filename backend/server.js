@@ -27,8 +27,8 @@ app.use(cors({
   credentials: true
 }));
 
-// IMPORTANT: handle preflight requests
-app.options("*", cors());
+// FIX: safe wildcard handling
+app.options("/*", cors());
 
 app.use(express.json());
 
