@@ -8,7 +8,7 @@ const app = express();
 // ---------------- CORS CONFIG ----------------
 const allowedOrigins = [
   "https://solar-internship-website.vercel.app",
-  "https://solar-internship-website-ab2ys42p4-disha-marnes-projects.vercel.app"
+  "https://solar-internship-website-ab2ys42p4-disha-marnes-projects.vercel.app/contact"
 ];
 
 app.use(cors({
