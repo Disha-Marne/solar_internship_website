@@ -103,10 +103,15 @@ app.post("/api/calculator", async (req, res) => {
       }
     });
 
-  } catch (err) {
-    console.error("CALCULATOR ERROR:", err);
-    res.status(500).json({ error: "Server error in calculator API" });
   }
+  catch (err) {
+  console.error("FULL ERROR:", err);
+
+  res.status(500).json({
+    error: err.message,
+    stack: err.stack
+  });
+}
 });
 
 // ---------------- CONTACT API ----------------
