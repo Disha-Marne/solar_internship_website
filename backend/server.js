@@ -126,7 +126,7 @@ app.post("/api/contact", async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
-    await sheet.addRow({
+    await sheet.addRows({
       Name: name,
       Phone: phone,
       Email: email,
