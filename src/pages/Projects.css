@@ -1,135 +1,367 @@
-/* Ensure your root variables are accessible, or define them here */
-/* For example:
-:root {
-  --font-heading: "Tienne", serif;
-  --font-body: "Lato", sans-serif;
-  --text-color: #333;
-  --dark-green: #226804;
-  --primary-green: #4caf50;
-}
-*/
+/* =========================================================================
+   PROJECTS PAGE STYLES (src/pages/Projects.css)
+   Warm Off-White (#F5F7F4) Visual Identity Edition
+   Palette:
+     Page Background: #F5F7F4 | White Cards: #FFFFFF | Dark Charcoal: #172033
+     Eyebrow / Accent: #1B4D3E | Solar Green: #2E7D32 | Borders: #E2E8F0
+   ========================================================================= */
 
-.projects-section {
-    padding: 4rem 2rem;
-    background-color: #fcf8f3; /* Light cream background from image */
-    font-family: var(--font-body, "Lato", sans-serif);
-    color: var(--text-color, #333);
-}
-
-.projects-container {
-    max-width: 1000px;
-    margin: 0 auto;
+.projects-page-wrapper {
+  width: 100%;
+  max-width: 100%;
+  background-color: #f5f7f4;
+  color: #172033;
+  font-family: var(--font-body, "Lato", -apple-system, sans-serif);
+  overflow-x: hidden;
+  padding-bottom: 6rem;
 }
 
+/* =========================================================================
+   1. HEADER SECTION (WARM OFF-WHITE BACKGROUND, CLEAN TYPOGRAPHY)
+   No Heavy Green Gradients
+   ========================================================================= */
+.projects-header-section {
+  background-color: #f5f7f4;
+  padding: 4.5rem 1.5rem 3rem 1.5rem;
+  text-align: center;
+}
+
+.projects-header-content {
+  max-width: 780px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Small Uppercase Green Eyebrow Label */
+.projects-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: #e6f0e8;
+  color: #1b4d3e;
+  border: 1px solid #a7f3d0;
+  padding: 0.35rem 0.95rem;
+  border-radius: 9999px;
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1.15rem;
+}
+
+.eyebrow-sparkle {
+  color: #2e7d32;
+}
+
+/* Main Heading in Dark Charcoal */
 .projects-main-title {
-    font-family: var(--font-heading, "Tienne", serif);
-    font-size: clamp(2.2rem, 5vw, 3rem);
-    text-align: center;
-    color: var(--dark-green, #226804);
-    margin-bottom: 0.5rem;
+  font-family: var(--font-heading, "Tienne", serif);
+  font-size: clamp(2.4rem, 4.5vw, 3.5rem);
+  font-weight: 700;
+  color: #172033;
+  margin: 0 0 1rem 0;
+  line-height: 1.18;
+  letter-spacing: -0.01em;
 }
 
+/* Improved Description: Typography, Width, and Spacing */
 .projects-subtitle {
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    text-align: center;
-    color: #555;
-    margin-bottom: 3rem;
+  font-size: clamp(1.025rem, 1.8vw, 1.15rem);
+  color: #475569;
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.65;
 }
 
-.project-item {
-    display: flex;
-    flex-direction: row; /* Default for larger screens */
-    align-items: center; /* Vertically centers the image and content */
-    background: #fff;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2.5rem; /* Slightly less margin than Services */
-    overflow: hidden; 
+/* =========================================================================
+   2. PORTFOLIO CARDS CONTAINER & CARDS
+   White Cards, Subtle Borders, Restrained Shadows
+   ========================================================================= */
+.projects-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
-.project-image-wrapper {
-    flex-shrink: 0; 
-    width: 280px; /* Fixed width for the image container */
-    height: 200px; /* Adjusted height for these images */
-    margin-right: 2rem; 
-    border-radius: 15px 0 0 15px; /* Rounded left corners */
-    overflow: hidden; 
+.projects-portfolio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2.25rem;
 }
 
-.project-image {
+/* Base Portfolio Card */
+.portfolio-card {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  background: #ffffff;
+  border-radius: 20px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.portfolio-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.08);
+  border-color: rgba(27, 77, 62, 0.25);
+}
+
+/* =========================================================================
+   3. LARGE PROJECT PHOTOGRAPHS WITH SMOOTH ZOOM & SUBTLE OVERLAY
+   Natural Image Colours (No Green Tint)
+   ========================================================================= */
+.portfolio-image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 280px;
+  overflow: hidden;
+  background-color: #f1f5f9;
+  cursor: pointer;
+}
+
+.portfolio-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portfolio-image-wrapper:hover .portfolio-image {
+  transform: scale(1.05);
+}
+
+/* Subtle "View Project" Overlay */
+.portfolio-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.portfolio-image-wrapper:hover .portfolio-image-overlay {
+  opacity: 1;
+}
+
+.overlay-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(8px);
+  color: #172033;
+  padding: 0.55rem 1.25rem;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.18);
+  transform: translateY(6px);
+  transition: transform 0.3s ease;
+}
+
+.portfolio-image-wrapper:hover .overlay-pill {
+  transform: translateY(0);
+}
+
+/* =========================================================================
+   4. CONTENT PRESENTATION & DISTINCT PORTFOLIO ACCENTS
+   ========================================================================= */
+.portfolio-content {
+  padding: 2.75rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.portfolio-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+}
+
+/* Visually Distinct Tags */
+.portfolio-tag {
+  font-size: 0.775rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+}
+
+.tag-residential {
+  background-color: #ecfdf5;
+  color: #1b4d3e;
+  border: 1px solid #a7f3d0;
+}
+
+.tag-commercial {
+  background-color: #eff6ff;
+  color: #1e40af;
+  border: 1px solid #bfdbfe;
+}
+
+.tag-industrial {
+  background-color: #fff8e8;
+  color: #854d0e;
+  border: 1px solid #fde047;
+}
+
+.portfolio-capacity {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #64748b;
+  background-color: #f1f5f9;
+  padding: 0.25rem 0.7rem;
+  border-radius: 6px;
+}
+
+/* Title in Dark Charcoal with Interactive Hover */
+.portfolio-card-title {
+  font-family: var(--font-heading, "Tienne", serif);
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: #172033;
+  margin: 0 0 0.75rem 0;
+  line-height: 1.25;
+}
+
+.portfolio-card-title.clickable {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.portfolio-card-title.clickable:hover {
+  color: #1b4d3e;
+}
+
+.portfolio-description {
+  font-size: 0.975rem;
+  color: #475569;
+  line-height: 1.65;
+  margin: 0 0 1.5rem 0;
+}
+
+/* Specifications Row */
+.portfolio-specs-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.spec-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: #f8faf8;
+  border: 1px solid #e2e8f0;
+  padding: 0.35rem 0.85rem;
+  border-radius: 8px;
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.spec-check {
+  color: #2e7d32;
+  flex-shrink: 0;
+}
+
+/* Interactive Action Button */
+.portfolio-actions {
+  display: flex;
+  align-items: center;
+}
+
+.btn-portfolio-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.8rem 1.65rem;
+  background-color: #ffffff;
+  color: #1b4d3e;
+  border: 1.5px solid #1b4d3e;
+  border-radius: 10px;
+  font-family: var(--font-body, "Lato", sans-serif);
+  font-size: 0.925rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-portfolio-action:hover,
+.btn-portfolio-action:focus-visible {
+  background-color: #1b4d3e;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(27, 77, 62, 0.25);
+}
+
+.btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+.btn-portfolio-action:hover .btn-arrow {
+  transform: translateX(3px);
+}
+
+/* =========================================================================
+   5. RESPONSIVE BREAKPOINTS (DESKTOP, TABLET & MOBILE)
+   ========================================================================= */
+
+/* --- Tablet / Medium Screen (max 960px) --- */
+@media (max-width: 960px) {
+  .portfolio-card {
+    grid-template-columns: 1fr;
+  }
+
+  .portfolio-image-wrapper {
+    height: 280px;
+    min-height: auto;
+  }
+
+  .portfolio-content {
+    padding: 2.25rem 2rem;
+  }
+}
+
+/* --- Mobile / Small Tablet (max 640px) --- */
+@media (max-width: 640px) {
+  .projects-header-section {
+    padding: 3.5rem 1rem 2.25rem 1rem;
+  }
+
+  .projects-container {
+    padding: 0 1rem;
+  }
+
+  .portfolio-image-wrapper {
+    height: 220px;
+  }
+
+  .portfolio-content {
+    padding: 1.75rem 1.25rem;
+  }
+
+  .portfolio-card-title {
+    font-size: 1.35rem;
+  }
+
+  .btn-portfolio-action {
     width: 100%;
-    height: 100%;
-    object-fit: cover; 
-    display: block;
-}
-
-.project-content {
-    padding: 1.5rem 2rem 1.5rem 0; 
-    flex-grow: 1; 
-}
-
-.project-type-title {
-    font-family: var(--font-heading, "Tienne", serif);
-    font-size: clamp(1.1rem, 2.7vw, 1.5rem); /* Slightly smaller than Services titles */
-    color: var(--dark-green, #226804); /* Using dark-green for titles here */
-    margin-top: 0;
-    margin-bottom: 0.8rem;
-}
-
-.project-description {
-    line-height: 1.6;
-    margin: 0; /* Remove default paragraph margin */
-    color: #444;
-}
-
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .project-item {
-        flex-direction: column; /* Stack image and content vertically */
-        align-items: center; 
-        text-align: center; 
-    }
-
-    .project-image-wrapper {
-        width: 100%; /* Image takes full width */
-        height: 180px; /* Adjust height for mobile */
-        margin-right: 0; 
-        margin-bottom: 1.5rem; 
-        border-radius: 15px 15px 0 0; /* Rounded top corners */
-    }
-
-    .project-image {
-        border-radius: 15px 15px 0 0; /* Ensure image corners match wrapper */
-    }
-
-    .project-content {
-        padding: 0 1.5rem 1.5rem 1.5rem; /* Adjust padding for centered text */
-    }
-}
-
-/* Add this to your existing Projects.css file */
-
-.project-type-title.clickable {
-    cursor: pointer;
-    transition: color 0.3s ease;
-}
-
-.project-type-title.clickable:hover {
-    color: var(--primary-green, #4caf50); /* Changes color on hover */
-}
-
-@media (max-width: 480px) {
-    .projects-section {
-        padding: 2.5rem 1rem;
-    }
-    .project-item {
-        margin-bottom: 2rem;
-    }
-    .project-image-wrapper {
-        height: 150px;
-    }
-    .project-type-title {
-        font-size: 1.2rem;
-    }
+    justify-content: center;
+  }
 }

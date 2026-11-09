@@ -27,9 +27,8 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(15, 36, 28, 0.78) 0%,
-    rgba(27, 77, 62, 0.68) 55%,
-    rgba(15, 36, 28, 0.88) 100%
+    rgba(0, 0, 0, 0.3) 0%,
+    rgba(0, 0, 0, 0.58) 100%
   );
   z-index: 1;
 }
@@ -461,6 +460,16 @@
   }
 
   .slider-nav-btn {
-    display: none;
+    display: flex;
+    width: 36px;
+    height: 36px;
+  }
+
+  .slider-nav-btn.prev {
+    left: 0.5rem;
+  }
+
+  .slider-nav-btn.next {
+    right: 0.5rem;
   }
 }

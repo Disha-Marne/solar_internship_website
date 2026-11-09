@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import "./HomePage.css";
 import homehouse from "../pics/homehouse.png";
 import eco from "../pics/eco.png";
@@ -50,8 +51,22 @@ const TestimonialSlider = () => {
 
       {total > 1 && (
         <>
-          <button className="slider-nav-btn prev" onClick={prevSlide} aria-label="Previous testimonial">&#10094;</button>
-          <button className="slider-nav-btn next" onClick={nextSlide} aria-label="Next testimonial">&#10095;</button>
+          <button
+            type="button"
+            className="slider-nav-btn prev"
+            onClick={prevSlide}
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            type="button"
+            className="slider-nav-btn next"
+            onClick={nextSlide}
+            aria-label="Next testimonial"
+          >
+            <ChevronRight size={20} />
+          </button>
         </>
       )}
 
