@@ -27,3 +27,4 @@ backend/.env
 backend/google-credentials.json
 desktop.ini
 node_modules
+backend/*.backup
