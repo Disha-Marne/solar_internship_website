@@ -22,14 +22,33 @@
 .footer-brand-col {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.1rem;
+}
+
+.footer-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 110px;
+  height: 75px;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  align-self: flex-start;
+  transition: transform var(--transition-fast), opacity var(--transition-fast);
+}
+
+.footer-logo:hover {
+  transform: scale(1.02);
+  opacity: 0.95;
 }
 
 .footer-logo img {
-  height: 48px;
-  width: auto;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  border-radius: var(--radius-sm);
+  transform: scale(1.94) translateY(-4.7%);
+  transform-origin: center center;
+  display: block;
 }
 
 .footer-tagline {
